@@ -6,6 +6,8 @@ import Form from 'react-bootstrap/Form'
 
 function ModalForm() {
   const [show, setShow] = useState(false);
+  const [name, setName] = useState('');
+  const [price, setPrice] = useState(undefined);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);

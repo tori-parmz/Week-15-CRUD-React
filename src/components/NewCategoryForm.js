@@ -35,13 +35,7 @@ function NewCategoryForm() {
             <Card.Body>
               <Card.Title>Menu Demo</Card.Title>
               <Card.Text>
-                <h3>Menu Category <span><Button variant='danger'><i className="bi bi-trash3"></i></Button>
-                </span></h3>
-                Here's a menu item...................$3.00 <span><Button variant='danger'><i className="bi bi-trash3"></i></Button>
-                </span>
-                <br></br>
-                <br></br>
-                <ModalForm />
+                
               </Card.Text>
             </Card.Body>
           </Card>

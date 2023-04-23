@@ -28,31 +28,34 @@ export function MenuApi() {
         });
     }
 
-    function deleteCategory(id) {
-        fetch(menuApi, {
-            method: 'DELETE',
+    async function deleteCategory(id) {
+        try {
+            const response = await fetch(menuApi+`${id}`, {
+                method: 'DELETE'
+        });
+        const data = await response.json();
+        console.log(data);
+    } catch (error) {
+        console.error(error);
+    }
+}
 
             // id on end of
             // ids are unique and handled by API
             // take a parameter of id, then put the parameter to the end of the URL
             // "menuApi"
 
-
-        })
+    function postCategory(newCategoryData) {
+        fetch(menuApi, {
+            //options
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newCategoryData)
+           
+        });
     }
-
-    // function postCategory() {
-    //     fetch(menuApi, {
-    //         //options
-    //         method: 'POST',
-    //         body: JSON.stringify({
-    //         name: ,
-    //         menuItems: []
-    //         }),
-    //         headers: {'Content-Type': 'application/json'},
-    
-    //     })
-    // }
 
 }
 

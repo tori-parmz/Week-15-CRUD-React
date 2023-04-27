@@ -1,13 +1,23 @@
 import NewItemForm from "./NewItemForm";
-import { MenuApi } from './MenuApi';
+import { Button } from "react-bootstrap";
 
 
-function MenuCategory(){
+export function MenuCategory(props){
+
+    let {categoryName, categoryId, items, itemName, itemPrice} = props;
 
     return(
-        <div id={`menu-category-${MenuCategory.id}`}>
-            <h3>{menuCategoryName} <span mb-2><Button variant='danger'><i className="bi bi-trash3"></i></Button>
+        <div id={`menu-category-${categoryId}`}>
+            <h3>{categoryName} <span mb-2><Button variant='danger'><i className="bi bi-trash3"></i></Button>
                 </span></h3>
+                <h4 > {itemName}..............{"$"+itemPrice} <span><Button variant='danger'><i className="bi bi-trash3"></i></Button>
+            </span>
+                 </h4>
+                {/* {props.menuItems.map((menuItem, index) => {
+            return {...menuItem}  */}
+            
+            
+        {/* })} */}
                 {/* map menu items here:
                 {itemName}...............{"$"+itemPrice} <span><Button variant='danger'><i className="bi bi-trash3"></i></Button>
                 </span> */}

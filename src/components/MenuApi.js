@@ -1,34 +1,49 @@
-import { useState, useEffect } from "react";
-
-
-export function MenuApi() {
-    const [menuCategories, setMenuCategories] = useState([]);
+//export function MenuApi() {
+    //const [menuCategories, setMenuCategories] = useState([]);
 
     const menuApi = 'https://64150cdae8fe5a3f3a143d74.mockapi.io/menuCategories'
     
-    function getCategories () {
-        fetch(menuApi)
-        .then(res => res.json())
-        .then((data) =>setMenuCategories(data))
+    export async function getCategories () {
+        // fetch(menuApi)
+        // .then(res => res.json())
+        // .then((data) =>setMenuCategories(data))
+        //option return data 
+        try {
+            //handle response
+            const response = await fetch(menuApi);
+            console.log(response);
+            const data = await response.json();
+            console.log(data);
+        } catch(error) {
+            console.log(error);
+        }
         
     
     }
 
-    useEffect (() => {
-        getCategories()
-    }, [])
+    // useEffect (() => {
+    //     getCategories()
+    // }, [])
 
-    function updateCategory(menuCategory) {
-        fetch(`${menuApi}/${menuCategory.id}`, {
-            method: 'PUT',
-            headers: {
-             'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(menuCategory)
-        });
+    export async function updateCategory(menuCategory) {
+        try {
+
+            fetch(`${menuApi}/${menuCategory.id}`, {
+                method: 'PUT',
+                headers: {
+                 'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(menuCategory)
+            });
+
+        } catch(error) {
+            console.log(error);
+        }
+        
+        
     }
 
-    async function deleteCategory(id) {
+    export async function deleteCategory(id) {
         try {
             const response = await fetch(menuApi+`${id}`, {
                 method: 'DELETE'
@@ -45,7 +60,7 @@ export function MenuApi() {
             // take a parameter of id, then put the parameter to the end of the URL
             // "menuApi"
 
-    function postCategory(newCategoryData) {
+    export async function postCategory(newCategoryData) {
         fetch(menuApi, {
             //options
             method: 'POST',
@@ -57,5 +72,5 @@ export function MenuApi() {
         });
     }
 
-}
+//}
 

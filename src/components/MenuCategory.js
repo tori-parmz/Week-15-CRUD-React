@@ -1,5 +1,6 @@
 import NewItemForm from "./NewItemForm";
 import { Button } from "react-bootstrap";
+import { deleteCategory } from "./MenuApi";
 
 
 export function MenuCategory(props){
@@ -30,7 +31,6 @@ export function MenuCategory(props){
     )
     
 }
-//use API verb methods here to pull in data
 
 //map the rooms here
 

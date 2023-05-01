@@ -1,7 +1,5 @@
 //export function MenuApi() {
     //const [menuCategories, setMenuCategories] = useState([]);
-
-    const menuApi = 'https://64150cdae8fe5a3f3a143d74.mockapi.io/menuCategories'
     
     export async function getCategories () {
         // fetch(menuApi)
@@ -10,7 +8,7 @@
         //option return data 
         try {
             //handle response
-            const response = await fetch(menuApi);
+            const response = await fetch('https://64150cdae8fe5a3f3a143d74.mockapi.io/menuCategories');
             console.log(response);
             const data = await response.json();
             console.log(data);
@@ -21,14 +19,28 @@
     
     }
 
-    // useEffect (() => {
-    //     getCategories()
-    // }, [])
+    export async function getCategory(id) {
+        // fetch(menuApi)
+        // .then(res => res.json())
+        // .then((data) =>setMenuCategories(data))
+        //option return data 
+        try {
+            //handle response
+            const response = await fetch('https://64150cdae8fe5a3f3a143d74.mockapi.io/menuCategories'+`${id}`);
+            console.log(response);
+            const data = await response.json();
+            console.log(data);
+        } catch(error) {
+            console.log(error);
+        }
+        
+    
+    }
 
     export async function updateCategory(menuCategory) {
         try {
 
-            fetch(`${menuApi}/${menuCategory.id}`, {
+            fetch(`'https://64150cdae8fe5a3f3a143d74.mockapi.io/menuCategories'/${menuCategory.id}`, {
                 method: 'PUT',
                 headers: {
                  'Content-Type': 'application/json'
@@ -45,7 +57,7 @@
 
     export async function deleteCategory(id) {
         try {
-            const response = await fetch(menuApi+`${id}`, {
+            const response = await fetch('https://64150cdae8fe5a3f3a143d74.mockapi.io/menuCategories'+`${id}`, {
                 method: 'DELETE'
         });
         const data = await response.json();
@@ -61,7 +73,7 @@
             // "menuApi"
 
     export async function postCategory(newCategoryData) {
-        fetch(menuApi, {
+        fetch('https://64150cdae8fe5a3f3a143d74.mockapi.io/menuCategories', {
             //options
             method: 'POST',
             headers: {

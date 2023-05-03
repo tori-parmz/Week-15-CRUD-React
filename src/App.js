@@ -10,22 +10,18 @@ import { MenuCategory } from './components/MenuCategory';
 import { useState, useEffect } from 'react';
 
 function App() {
-  //how to structure: where is data needed where is it passing?
+  
   const [allCategories, setAllCategories] = useState([]);
   const [newCategory, setNewCategory] = useState('');
   const menuApi = 'https://64150cdae8fe5a3f3a143d74.mockapi.io/menuCategories';
 
  async function getCategories () {
-    // fetch(menuApi)
-    // .then(res => res.json())
-    // .then((data) =>setMenuCategories(data))
-    //option return data 
+   
     try {
-        //handle response
         const response = await fetch(menuApi);
         console.log(response);
         const data = await response.json();
-        console.log(data);
+        return data
     } catch(error) {
         console.log(error);
     }
@@ -34,10 +30,7 @@ function App() {
 }
 
 async function getCategory(id) {
-    // fetch(menuApi)
-    // .then(res => res.json())
-    // .then((data) =>setMenuCategories(data))
-    //option return data 
+
     try {
         //handle response
         const response = await fetch(menuApi+`${id}`);
@@ -51,22 +44,6 @@ async function getCategory(id) {
 
 }
 
-async function deleteCategory(id) {
-  try {
-      const response = await fetch(menuApi+`${id}`, {
-          method: 'DELETE'
-  });
-  const data = await response.json();
-  console.log(data);
-} catch (error) {
-  console.error(error);
-}
-}
-
-      // id on end of
-      // ids are unique and handled by API
-      // take a parameter of id, then put the parameter to the end of the URL
-      // "menuApi"
 
 async function postCategory(newCategoryData) {
   fetch(menuApi, {
@@ -89,7 +66,7 @@ async function postCategory(newCategoryData) {
         const menuData = await getCategories();
         console.log(menuData);
         setAllCategories(menuData);
-        console.log(allCategories);
+        return allCategories
       } catch (error) {
         console.log(error);
       }
@@ -97,10 +74,10 @@ async function postCategory(newCategoryData) {
     }
     stateUpdate();
   }, []);
- 
-  function submitNewCategory() {
 
-  }
+  console.log(allCategories);
+ 
+
   return (
     <div className="App">
       <header className="App-header">
@@ -138,14 +115,9 @@ async function postCategory(newCategoryData) {
               <Card.Title>Menu Demo</Card.Title>
               <Card.Text>
 
-                {/* {allCategories.map((menuCategory, index) => {
+              {/* {allCategories.map((menuCategory, index) => {
             return <MenuCategory key={index} {...menuCategory} />})} */}
 
-                <MenuCategory id="1" categoryName="Drinks" itemName="Drink 1" itemPrice="4.00" />
-               {/* map categories here
-               categories map & return <MenuCategory />
-               
-               */}
               </Card.Text>
             </Card.Body>
           </Card>

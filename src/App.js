@@ -57,6 +57,19 @@ async function postCategory(newCategoryData) {
   });
 }
 
+async function deleteCategory(id) {
+  try {
+      const response = await fetch(menuApi+`/${id}`, {
+          method: 'DELETE'
+  });
+  const data = await response.json();
+  console.log(data);
+  // allCategories.filter(id);
+} catch (error) {
+  console.error(error);
+}
+}
+
 
 
   useEffect(() => {
@@ -115,8 +128,8 @@ async function postCategory(newCategoryData) {
               <Card.Title>Menu Demo</Card.Title>
               <Card.Text>
 
-              {/* {allCategories.map((menuCategory, index) => {
-            return <MenuCategory key={index} {...menuCategory} />})} */}
+              {allCategories.map((menuCategory, index) => {
+            return <MenuCategory key={index} onDelete={deleteCategory} {...menuCategory} />})}
 
               </Card.Text>
             </Card.Body>

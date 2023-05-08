@@ -16,9 +16,21 @@ export function MenuCategory(props){
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const onSubmit = (e) => {
+      e.preventDefault();
+      if (itemName && itemPrice) {
+          props.addNewItem({itemName, itemPrice});
+          setItemName('');
+          setItemPrice('');
+          handleClose();
+      } else {
+          console.log('invalid input');
+      }
+  }
     //need props for item add and item delete
     //for menuItems array: menuCat.menuItems
-
+    //needs PUT method to update menuItems array 
     return(
         <div id={`menu-category-${categoryId}`}>
             <h3>{categoryName}
@@ -29,24 +41,7 @@ export function MenuCategory(props){
                   </Button>
                   </span>
                   </h3>
-                  {function NewItemForm(props) {
 
-//needs PUT method to update menuItems array 
-
-const onSubmit = (e) => {
-    e.preventDefault();
-    if (itemName && itemPrice) {
-        props.addNewItem({itemName, itemPrice});
-        setItemName('');
-        setItemPrice('');
-        handleClose();
-    } else {
-        console.log('invalid input');
-    }
-}
-
-  return (
-    <>
       <Button variant="success" onClick={handleShow}>
       <i class="bi bi-plus-square"></i>
       </Button>
@@ -76,19 +71,15 @@ const onSubmit = (e) => {
           </Button>
         </Modal.Footer>
       </Modal>
-    </>
-  );
-}}
-            
-            {/* {menuItems.map((menuItem, index) => {
-            return {itemName}...............{"$"+itemPrice} <span><Button variant='danger'><i className="bi bi-trash3"></i></Button>
-                </span>}
+    
+  
 
-                <br></br>
-                <br></br>
-                 } */}
             
-
+             {menuItems.map((menuItem, index) => (
+            <p {...menuItem} key={index}>{menuItem.itemName}...............{"$"+menuItem.itemPrice} <span><Button variant='danger'><i className="bi bi-trash3"></i></Button>
+                </span></p>)
+             )}
+                              
          </div>
     
     )

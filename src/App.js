@@ -15,7 +15,7 @@ function App() {
   const [newCategory, setNewCategory] = useState('');
   const menuApi = 'https://64150cdae8fe5a3f3a143d74.mockapi.io/menuCategories';
 
- async function getCategories () {
+ async function getCategories() {
    
     try {
         const response = await fetch(menuApi);
@@ -29,41 +29,47 @@ function App() {
 
 }
 
-async function getCategory(id) {
 
-    try {
-        //handle response
-        const response = await fetch(menuApi+`${id}`);
-        console.log(response);
-        const data = await response.json();
-        console.log(data);
-    } catch(error) {
-        console.log(error);
-    }
-    
+async function updateCategory(menuCategory) {
+  try {
 
-}
+      fetch(`${menuApi}/${menuCategory.id}`, {
+          method: 'PUT',
+          headers: {
+           'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(menuCategory)
+      });
+
+  } catch(error) {
+      console.log(error);
+  }}
 
 
 async function postCategory(newCategoryData) {
-  fetch(menuApi, {
-      //options
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(newCategoryData)
-     
-  });
+ try{
+  await fetch(menuApi, {
+    //options
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(newCategoryData)
+   
+});
+ } catch (error){
+  console.error(error)
+ }
 }
+
 
 async function deleteCategory(id) {
   try {
       const response = await fetch(menuApi+`/${id}`, {
           method: 'DELETE'
   });
-  const data = await response.json();
-  console.log(data);
+  setAllCategories(allCategories.filter(p => p.id !== id));
+  await getCategories();
   // allCategories.filter(id);
 } catch (error) {
   console.error(error);
@@ -103,7 +109,7 @@ async function deleteCategory(id) {
             <Card.Body>
               <Card.Title>Create Your Menu Here</Card.Title>
               <Form>
-      <Form.Group className="mb-3" controlId="formBasicEmail">
+      <Form.Group className="mb-3">
         <Form.Label>New Menu Category</Form.Label>
         <Form.Control type="text" id="menu-category-input" placeholder="" onChange={(e) => setNewCategory(e.target.value)} />
         {/* use an onchange to get the value input then an on click for the button */}
@@ -111,7 +117,7 @@ async function deleteCategory(id) {
       <Button
       variant="primary"
       type="submit"
-      onClick={console.log(newCategory)}
+      onClick={postCategory(newCategory)}
       // use an onclick to use POST method
       >
         Submit
@@ -129,7 +135,7 @@ async function deleteCategory(id) {
               <Card.Text>
 
               {allCategories.map((menuCategory, index) => {
-            return <MenuCategory key={index} onDelete={deleteCategory} {...menuCategory} />})}
+            return <MenuCategory key={index} onDelete={deleteCategory} addNewItem={updateCategory} {...menuCategory} />})}
 
               </Card.Text>
             </Card.Body>

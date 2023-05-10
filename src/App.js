@@ -46,20 +46,27 @@ async function updateCategory(menuCategory) {
   }}
 
 
-async function postCategory(newCategoryData) {
+async function postCategory(e, categoryName) {
+  e.preventDefault()//used for things wrapped in a form, keeps it from refreshing the page before using contents
  try{
-  await fetch(menuApi, {
+  let response = await fetch(menuApi, {
     //options
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
     },
-    body: JSON.stringify(newCategoryData)
-   
+    body: JSON.stringify({categoryName})
+    
 });
+let test = await response.json();
+    return test
  } catch (error){
   console.error(error)
  }
+ 
+ let returnData = await getCategories();
+  return returnData
+
 }
 
 
@@ -85,7 +92,7 @@ async function deleteCategory(id) {
         const menuData = await getCategories();
         console.log(menuData);
         setAllCategories(menuData);
-        return allCategories
+        // return allCategories
       } catch (error) {
         console.log(error);
       }
@@ -117,8 +124,10 @@ async function deleteCategory(id) {
       <Button
       variant="primary"
       type="submit"
-      onClick={postCategory(newCategory)}
+      onClick={(e) => postCategory(e, newCategory)}
+      
       // use an onclick to use POST method
+      //prevent default
       >
         Submit
       </Button>
@@ -135,7 +144,10 @@ async function deleteCategory(id) {
               <Card.Text>
 
               {allCategories.map((menuCategory, index) => {
-            return <MenuCategory key={index} onDelete={deleteCategory} addNewItem={updateCategory} {...menuCategory} />})}
+            return <MenuCategory
+            key={index}
+            onDelete={deleteCategory}
+            addNewItem={updateCategory} {...menuCategory} />})}
 
               </Card.Text>
             </Card.Body>

@@ -4,16 +4,20 @@ import { Button } from "react-bootstrap";
 import ListGroup from "react-bootstrap/ListGroup";
 
 export function MenuCategory(props) {
-  const menuApi = "https://64150cdae8fe5a3f3a143d74.mockapi.io/menuCategories";
+
 
   let {
+    menuCategory,
+    onDelete,
+    addItem,
+    itemDelete,
+  } = props;
+  const {
     categoryName,
     categoryId,
-    onDelete,
     menuItems,
-    itemDelete,
-    addNewItem,
-  } = props;
+
+  } = menuCategory
   const [show, setShow] = useState(false);
   const [itemName, setItemName] = useState("");
   const [itemPrice, setItemPrice] = useState(undefined);
@@ -30,7 +34,7 @@ export function MenuCategory(props) {
         itemPrice: itemPrice,
       };
       console.log(newItem);
-      addNewItem(newItem);
+      addItem(newItem);
       setItemName("");
       setItemPrice("");
       handleClose();

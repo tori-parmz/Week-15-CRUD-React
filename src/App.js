@@ -25,23 +25,6 @@ function App() {
     }
   }
 
-  async function updateCategory(updatedCategory) {
-    try {
-      fetch(`${menuApi}/${updatedCategory.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedCategory),
-      });
-
-      updatedCategory.menuItems.push(newItem);
-
-      getCategories();
-    } catch (error) {
-      console.log(error);
-    }
-  }
 
   async function postCategory(e, categoryName) {
     e.preventDefault(); //used for things wrapped in a form, keeps it from refreshing the page before using contents
@@ -76,11 +59,27 @@ function App() {
       console.error(error);
     }
   }
+
+  async function updateCategory(updatedCategory) {
+    try {
+      await fetch(`${menuApi}/${updatedCategory.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedCategory),
+      });
+
+      getCategories(updatedCategory);
+    } catch (error) {
+      console.log(error);
+    }
+  }
   //need to fix this:
-  async function deleteMenuItem(menuItemId) {
+  async function deleteMenuItem(menuCategory,menuItemId) {
     const updatedCategory = {
-      ...category,
-      menuItems: category.menuItems.filter((x) => x.id !== menuItemId),
+      ...menuCategory,
+      menuItems: menuCategory.menuItems.filter((x) => x.id !== menuItemId),
     };
 
     try {
@@ -152,9 +151,10 @@ function App() {
                     return (
                       <MenuCategory
                         key={index}
+                        menuCategory={menuCategory}
                         onDelete={deleteCategory}
-                        addNewItem={updateCategory}
                         itemDelete={deleteMenuItem}
+                        addItem={updateCategory}
                         {...menuCategory}
                       />
                     );

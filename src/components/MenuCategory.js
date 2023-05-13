@@ -34,7 +34,7 @@ export function MenuCategory(props) {
         itemPrice: itemPrice,
       };
       console.log(newItem);
-      addItem(newItem);
+      addItem(categoryId, newItem);
       setItemName("");
       setItemPrice("");
       handleClose();

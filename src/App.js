@@ -60,17 +60,17 @@ function App() {
     }
   }
 
-  async function updateCategory(updatedCategory) {
+  async function updateCategory(id, {updatedCategory}) {
     try {
-      await fetch(`${menuApi}/${updatedCategory.id}`, {
+      await fetch(`${menuApi}/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(updatedCategory),
+        body: JSON.stringify({updatedCategory}),
       });
 
-      getCategories(updatedCategory);
+      getCategories();
     } catch (error) {
       console.log(error);
     }

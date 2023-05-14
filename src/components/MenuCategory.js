@@ -4,25 +4,12 @@ import { Button } from "react-bootstrap";
 import ListGroup from "react-bootstrap/ListGroup";
 
 export function MenuCategory(props) {
-
-
-  let {
-    menuCategory,
-    onDelete,
-    addItem,
-    itemDelete,
-  } = props;
-  const {
-    categoryName,
-    categoryId,
-    menuItems,
-
-  } = menuCategory
+  let { menuCategory, onDelete, addItem, itemDelete } = props;
+  const { categoryName, categoryId, menuItems } = menuCategory;
   const [show, setShow] = useState(false);
   const [itemName, setItemName] = useState("");
   const [itemPrice, setItemPrice] = useState(undefined);
-  const [counter, setCounter] = useState(0)
-  
+  const [counter, setCounter] = useState(0);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -31,7 +18,7 @@ export function MenuCategory(props) {
     e.preventDefault();
     if (itemName && itemPrice) {
       console.log(itemName, itemPrice);
-      
+
       const newItem = {
         itemId: counter,
         itemName: itemName,
@@ -43,7 +30,7 @@ export function MenuCategory(props) {
       setItemName("");
       setItemPrice("");
       handleClose();
-      setCounter(counter+1);
+      setCounter(counter + 1);
     } else {
       console.log("invalid input");
     }
@@ -106,7 +93,12 @@ export function MenuCategory(props) {
             {" "}
             {menuItem.itemName}.......................{"$" + menuItem.itemPrice}{" "}
             <span>
-              <Button variant="danger" onClick={() => itemDelete(categoryId, menuItem.itemId, menuCategory)}>
+              <Button
+                variant="danger"
+                onClick={() =>
+                  itemDelete(categoryId, menuItem.itemId, menuCategory)
+                }
+              >
                 <i className="bi bi-trash3"></i>
               </Button>
             </span>

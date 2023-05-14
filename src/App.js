@@ -25,36 +25,34 @@ function App() {
     }
   }
 
-
   async function postCategory(e, categoryName) {
     e.preventDefault(); //used for things wrapped in a form, keeps it from refreshing the page before using contents
     try {
       let response = await fetch(menuApi, {
-        //options
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ categoryName }),
       });
-      let test = await response.json();
-      return test;
+      const result = await response.json(); // parse the response body as JSON
+      setAllCategories([...allCategories, result]); // update the state with the new category
+      
     } catch (error) {
       console.error(error);
     }
 
-    let returnData = await getCategories();
-    return returnData;
+    setNewCategory("");
+    e.target.reset();
   }
 
   async function deleteCategory(id) {
     try {
-      const response = await fetch(menuApi + `/${id}`, {
+      await fetch(menuApi + `/${id}`, {
         method: "DELETE",
       });
-      setAllCategories(allCategories.filter((p) => p.id !== id));
-      await getCategories();
-      // allCategories.filter(id);
+      const response = await getCategories();
+      setAllCategories(response);
     } catch (error) {
       console.error(error);
     }
@@ -69,22 +67,26 @@ function App() {
         },
         body: JSON.stringify(updatedCategory),
       });
-      getCategories();
+      const response = await getCategories();
+      setAllCategories(response);
     } catch (error) {
       console.log(error);
     }
   }
-  //need to fix this:
-  async function deleteMenuItem(id, menuItemId, menuCategory,) {
+
+  async function deleteMenuItem(id, menuItemId, menuCategory) {
     console.log("Category ID: ", id, "Item ID: ", menuItemId);
     const updatedCategory = {
       ...menuCategory,
-      menuItems: menuCategory.menuItems.filter((menuItem) => menuItem.itemId !== menuItemId),
+      menuItems: menuCategory.menuItems.filter(
+        (menuItem) => menuItem.itemId !== menuItemId
+      ),
     };
-    
     console.log(updatedCategory);
     try {
       await updateCategory(id, updatedCategory);
+      const response = await getCategories();
+      setAllCategories(response);
     } catch (error) {
       console.error(error);
     }
@@ -129,7 +131,7 @@ function App() {
                     </Form.Group>
                     <Button
                       variant="primary"
-                      type="submit"
+                      type="reset"
                       onClick={(e) => postCategory(e, newCategory)}
 
                       // use an onclick to use POST method

@@ -104,7 +104,7 @@ export function MenuCategory(props) {
             {" "}
             {menuItem.itemName}.......................{"$" + menuItem.itemPrice}{" "}
             <span>
-              <Button variant="danger" onClick={() => itemDelete(categoryId, menuItems.indexOf(menuItem), menuCategory)}>
+              <Button variant="danger" onClick={() => itemDelete(categoryId, index, menuCategory)}>
                 <i className="bi bi-trash3"></i>
               </Button>
             </span>

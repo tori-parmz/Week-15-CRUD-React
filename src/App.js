@@ -76,9 +76,10 @@ function App() {
   }
   //need to fix this:
   async function deleteMenuItem(id, menuItemId, menuCategory) {
+    console.log(id, menuItemId, menuCategory);
     const updatedCategory = {
       ...menuCategory,
-      menuItems: menuCategory.menuItems.filter((x) => x.id !== menuItemId),
+      menuItems: menuCategory?.menuItems.filter((x) => x.id !== menuItemId),
     };
 
     try {

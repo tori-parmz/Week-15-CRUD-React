@@ -10,6 +10,8 @@ import { MenuCategory } from "./components/MenuCategory";
 import { useState, useEffect } from "react";
 
 function App() {
+  //useState hooks: setAllCategories syncs state with API data
+  //setNewCategory creates a name for a new category that is posted to API
   const [allCategories, setAllCategories] = useState([]);
   const [newCategory, setNewCategory] = useState("");
   const menuApi = "https://64150cdae8fe5a3f3a143d74.mockapi.io/menuCategories";
@@ -37,7 +39,6 @@ function App() {
       });
       const result = await response.json(); // parse the response body as JSON
       setAllCategories([...allCategories, result]); // update the state with the new category
-      
     } catch (error) {
       console.error(error);
     }
@@ -49,16 +50,19 @@ function App() {
   async function deleteCategory(id) {
     try {
       await fetch(menuApi + `/${id}`, {
+        //deletes category by its ID
         method: "DELETE",
       });
       const response = await getCategories();
-      setAllCategories(response);
+      setAllCategories(response); //updates allCategories in state to reflect the change
     } catch (error) {
       console.error(error);
     }
   }
 
   async function updateCategory(id, updatedCategory) {
+    //this recieves the categoryId and
+    //the menuCategory from MenuCategory component
     try {
       await fetch(`${menuApi}/${id}`, {
         method: "PUT",
@@ -68,7 +72,7 @@ function App() {
         body: JSON.stringify(updatedCategory),
       });
       const response = await getCategories();
-      setAllCategories(response);
+      setAllCategories(response); //update state to reflect the change
     } catch (error) {
       console.log(error);
     }
@@ -81,12 +85,16 @@ function App() {
       menuItems: menuCategory.menuItems.filter(
         (menuItem) => menuItem.itemId !== menuItemId
       ),
+      //filter to return only items that do not match the deleted item ID
+      //only works because menuCategory is holding data for the unique id value
+      //and menuItemId is recieving menuItem.itemId from MenuCategory component
     };
     console.log(updatedCategory);
     try {
-      await updateCategory(id, updatedCategory);
+      await updateCategory(id, updatedCategory); //updatedCategory has all the same data
+      //except for the deleted item
       const response = await getCategories();
-      setAllCategories(response);
+      setAllCategories(response); //update state
     } catch (error) {
       console.error(error);
     }
@@ -125,17 +133,15 @@ function App() {
                         type="text"
                         id="menu-category-input"
                         placeholder=""
-                        onChange={(e) => setNewCategory(e.target.value)}
+                        onChange={(e) => setNewCategory(e.target.value)} //onChange gets updates newCategory
+                        value={newCategory} //this makes the form entry reset after newCategory is reset in state
                       />
-                      {/* use an onchange to get the value input then an on click for the button */}
                     </Form.Group>
                     <Button
                       variant="primary"
                       type="reset"
                       onClick={(e) => postCategory(e, newCategory)}
-
-                      // use an onclick to use POST method
-                      //prevent default
+                      //onClick sends the event and the newCategory to postCategory
                     >
                       Submit
                     </Button>
@@ -155,7 +161,7 @@ function App() {
                       <MenuCategory
                         key={index}
                         menuCategory={menuCategory}
-                        onDelete={deleteCategory}
+                        onDelete={deleteCategory} //passing functions down as props
                         itemDelete={deleteMenuItem}
                         addItem={updateCategory}
                         {...menuCategory}

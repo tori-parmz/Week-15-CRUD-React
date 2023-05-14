@@ -21,7 +21,7 @@ export function MenuCategory(props) {
   const [show, setShow] = useState(false);
   const [itemName, setItemName] = useState("");
   const [itemPrice, setItemPrice] = useState(undefined);
-  let itemId = 0;
+  const [counter, setCounter] = useState(0)
   
 
   const handleClose = () => setShow(false);
@@ -33,6 +33,7 @@ export function MenuCategory(props) {
       console.log(itemName, itemPrice);
       
       const newItem = {
+        itemId: counter,
         itemName: itemName,
         itemPrice: itemPrice,
       };
@@ -42,6 +43,7 @@ export function MenuCategory(props) {
       setItemName("");
       setItemPrice("");
       handleClose();
+      setCounter(counter+1);
     } else {
       console.log("invalid input");
     }
@@ -104,7 +106,7 @@ export function MenuCategory(props) {
             {" "}
             {menuItem.itemName}.......................{"$" + menuItem.itemPrice}{" "}
             <span>
-              <Button variant="danger" onClick={() => itemDelete(categoryId, index, menuCategory)}>
+              <Button variant="danger" onClick={() => itemDelete(categoryId, menuItem.itemId, menuCategory)}>
                 <i className="bi bi-trash3"></i>
               </Button>
             </span>

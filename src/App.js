@@ -79,12 +79,10 @@ function App() {
     console.log("Category ID: ", id, "Item ID: ", menuItemId);
     const updatedCategory = {
       ...menuCategory,
-      menuItems: menuCategory.menuItems.filter((items) => items.id !== menuItemId),
+      menuItems: menuCategory.menuItems.filter((menuItem) => menuItem.itemId !== menuItemId),
     };
-
+    
     console.log(updatedCategory);
-
-
     try {
       await updateCategory(id, updatedCategory);
     } catch (error) {

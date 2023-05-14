@@ -60,30 +60,29 @@ function App() {
     }
   }
 
-  async function updateCategory(id, {updatedCategory}) {
+  async function updateCategory(id, updatedCategory) {
     try {
       await fetch(`${menuApi}/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({updatedCategory}),
+        body: JSON.stringify(updatedCategory),
       });
-
       getCategories();
     } catch (error) {
       console.log(error);
     }
   }
   //need to fix this:
-  async function deleteMenuItem(menuCategory,menuItemId) {
+  async function deleteMenuItem(id, menuItemId, menuCategory) {
     const updatedCategory = {
       ...menuCategory,
       menuItems: menuCategory.menuItems.filter((x) => x.id !== menuItemId),
     };
 
     try {
-      await updateCategory(updatedCategory);
+      await updateCategory(id, updatedCategory);
     } catch (error) {
       console.error(error);
     }

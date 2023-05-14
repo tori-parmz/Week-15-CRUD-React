@@ -21,6 +21,7 @@ export function MenuCategory(props) {
   const [show, setShow] = useState(false);
   const [itemName, setItemName] = useState("");
   const [itemPrice, setItemPrice] = useState(undefined);
+  let itemId = 0
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -28,13 +29,17 @@ export function MenuCategory(props) {
   const onSubmit = (e) => {
     e.preventDefault();
     if (itemName && itemPrice) {
-      console.log(itemName, itemPrice);
+      itemId++;
+      console.log(itemName, itemPrice, itemId);
+      
       const newItem = {
+        itemId: itemId-1,
         itemName: itemName,
         itemPrice: itemPrice,
       };
       console.log(newItem);
-      addItem(categoryId, newItem);
+      menuItems.push(newItem);
+      addItem(categoryId, menuCategory);
       setItemName("");
       setItemPrice("");
       handleClose();
@@ -100,7 +105,7 @@ export function MenuCategory(props) {
             {" "}
             {menuItem.itemName}...............{"$" + menuItem.itemPrice}{" "}
             <span>
-              <Button variant="danger" onClick={() => itemDelete(index)}>
+              <Button variant="danger" onClick={() => itemDelete(categoryId, menuItem.itemId, menuCategory)}>
                 <i className="bi bi-trash3"></i>
               </Button>
             </span>

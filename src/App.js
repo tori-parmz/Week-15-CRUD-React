@@ -75,12 +75,15 @@ function App() {
     }
   }
   //need to fix this:
-  async function deleteMenuItem(id, menuItemId, menuCategory) {
-    console.log(id, menuItemId, menuCategory);
+  async function deleteMenuItem(id, menuItemId, menuCategory,) {
+    console.log("Category ID: ", id, "Item ID: ", menuItemId);
     const updatedCategory = {
       ...menuCategory,
-      menuItems: menuCategory?.menuItems.filter((x) => x.id !== menuItemId),
+      menuItems: menuCategory.menuItems.filter((items) => items.id !== menuItemId),
     };
+
+    console.log(updatedCategory);
+
 
     try {
       await updateCategory(id, updatedCategory);
